@@ -85,19 +85,17 @@ public class MovimientoService implements IMovimientoService{
             Double saldoFinalCuentaReceptor = 0.0;
 
             /*Creamos un objeto y guardamos sus datos que vienen del movimiento*/
-            CuentaBancaria cuentaB = cuentaServ.findCuenta(movi.getUnaCuenta().getId_cuenta());
+            CuentaBancaria cuentaB = cuentaServ.findCuenta(id);
 
             /*Buscamos la cuenta de la id ingresada*/
-            CuentaBancaria cuentaQueRecibe = cuentaServ.findCuenta(id);
+            CuentaBancaria cuentaQueRecibe = cuentaServ.findCuenta(movi.getUnaCuenta().getId_cuenta());
 
-            /*Hacemos el condicional para hacer el aumento de saldo y la resta a la cuenta*/
-            if (cuentaB.getId_cuenta() == movi.getUnaCuenta().getId_cuenta()){
-
+                /*Guardamos el saldo para cada usuario en la variable local*/
                 saldoFinalCuentaRemitente = cuentaB.getSaldo() - movi.getMonto();
                 saldoFinalCuentaReceptor = cuentaQueRecibe.getSaldo() + movi.getMonto();
 
-            }
 
+            /*Seteamos los saldos para cada usuario*/
             cuentaB.setSaldo(saldoFinalCuentaRemitente);
             cuentaQueRecibe.setSaldo(saldoFinalCuentaReceptor);
         }
